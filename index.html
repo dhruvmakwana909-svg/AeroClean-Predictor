@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>PM 2.5 Predictor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            background:#f1f8ff;
+            font-family: Arial, sans-serif;
+            text-align:center;
+        }
+
+        .container {
+            width:95%;
+            max-width:400px;
+            background:white;
+            padding:18px;
+            margin:20px auto;
+            border-radius:18px;
+            box-shadow:0 3px 8px rgba(0,0,0,0.2);
+        }
+
+        input {
+            width:100%;
+            padding:7px;
+            border:2px solid #42a5f5;
+            border-radius:8px;
+            font-size:15px;
+            outline:none;
+        }
+
+        button {
+            width:100%;
+            background:#0077b6;
+            color:white;
+            padding:11px;
+            border:none;
+            border-radius:10px;
+            font-size:17px;
+            cursor:pointer;
+            transition:0.3s ease-in-out;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .download-btn {
+            display:inline-block;
+            background:#023e8a;
+            color:white;
+            padding:10px 16px;
+            border-radius:10px;
+            font-size:16px;
+            text-decoration:none;
+            margin-top:18px;
+            transition:0.3s;
+        }
+
+        .download-btn:hover {
+            transform:scale(1.06);
+        }
+
+        table {
+            width:95%;
+            margin:25px auto;
+            border-collapse:collapse;
+            background:white;
+            border-radius:12px;
+            overflow:hidden;
+            box-shadow:0 2px 7px rgba(0,0,0,0.15);
+        }
+
+        th, td {
+            padding:8px;
+            border:1px solid #90e0ef;
+            font-size:14px;
+        }
+
+        th {
+            background:#0077b6;
+            color:white;
+        }
+
+        img.graph {
+            width:95%;
+            max-width:500px;
+            border-radius:12px;
+            margin-top:20px;
+            box-shadow:0px 2px 6px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2 style="color:#0d47a1;">☁ PM 2.5 Prediction System</h2>
+
+    <div class="container">
+        <form action="/predict" method="post">
+
+            <label>User Name:</label>
+            <input type="text" name="User Name"><br><br>
+
+            Mean Temperature: <input type="text" name="Mean Temperature"><br><br>
+            Maximum Temperature: <input type="text" name="Maximum Temperature"><br><br>
+            Minimum Temperature: <input type="text" name="Minimum Temperature"><br><br>
+            Sea Level Pressure: <input type="text" name="Sea Level Pressure"><br><br>
+            Humidity: <input type="text" name="Humidity"><br><br>
+            Visibility: <input type="text" name="Visibility"><br><br>
+            Wind Speed: <input type="text" name="Wind Speed"><br><br>
+            Max Wind Speed: <input type="text" name="Max Wind Speed"><br><br>
+
+            <button type="submit">🔍 Predict</button>
+        </form>
+
+        <h3 style="color:#b71c1c;">{{ prediction_text }}</h3>
+
+        <a href="/download" class="download-btn">⬇ Download History Excel</a>
+    </div>
+
+    {% if tables %}
+        <h3 style="color:#023e8a;">📊 Prediction History</h3>
+        {{ tables | safe }}
+    {% endif %}
+
+    {% if graph %}
+        <h3 style="color:#023e8a;">📈 Prediction Trend Graph</h3>
+        <img src="{{ graph }}" class="graph">
+    {% endif %}
+
+    <p style="color:#0077b6;margin-top:30px;">Made using :contentReference[oaicite:0]{index=0} and edited in :contentReference[oaicite:1]{index=1}</p>
+
+</body>
+
+</html>
